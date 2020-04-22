@@ -24,4 +24,5 @@ then
 else
     echo "sorry we don't support your distro: $distro"
     echo "If you would like to contribute for testing for your distro kindly contact us"
+    cat /etc/os-release > ~/Documents/distroinfo.txt
 fi
