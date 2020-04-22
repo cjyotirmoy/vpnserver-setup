@@ -2,9 +2,9 @@
 distro=$(cat /etc/os-release | grep -w "ID=*" | sed "s/ID=//")
 version=$(cat /etc/os-release | grep -w "VERSION_ID=*" | sed "s/VERSION_ID=//" |sed  "s/\"//g" | sed "s/\.//g")
 type=$(cat /etc/os-release | grep -w "ID_LIKE=*" | sed "s/ID_LIKE=//")
-echo "Your distro details: "
 if [[ "$type" == "debian" ]]
 then
+        echo "Your distro details: "
         echo "ID_LIKE=$type"
         if [[ "$distro" == "ubuntu" ]]
         then
