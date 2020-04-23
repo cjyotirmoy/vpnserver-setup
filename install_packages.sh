@@ -1,5 +1,6 @@
 #!/bin/bash
 if [[ $flag -eq 1 ]]
+##Installing the wireguard package
 then
     echo "Installing packages: "
     sudo apt install wireguard
@@ -16,5 +17,6 @@ then
     echo "Installing packages:"
     sudo apt install wireguard
 fi
+ip link add dev wg0 type wireguard
 
 
