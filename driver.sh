@@ -1,8 +1,8 @@
-    cd ~
     workdir=$(pwd)
     mkdir config_backups
 echo "$(tput setab 1) $(tput setaf 7)Determining the eligibility of your distro and install packages with sub-scripts $(tput sgr 0)"
     ./os_find.sh
+    cd ~
 echo "$(tput setab 1) $(tput setaf 7)Generating server keys $(tput sgr 0)"
     umask 077
     mkdir server_keys
@@ -36,8 +36,8 @@ echo "$(tput setab 1) $(tput setaf 7) Configuring firewall rules ... $(tput sgr 
         sudo iptables -A FORWARD -i wg0 -o wg0 -m conntrack --ctstate NEW -j ACCEPT
     ##Setting up NAT
         echo "$(tput setab 1) $(tput setaf 7)You have the following network adapters, enter the one you want to use for the tunnel: (Default first one) $(tput sgr 0) "
-            ip addr show | awk '/inet.*brd/{print $NF}'
-            net_adapter=$(ip addr show | awk '/inet.*brd/{print $NF; exit}')
+            ip addr show | awk '/inet.*global dynamic/{print $NF}'
+            net_adapter=$(ip addr show | awk '/inet.*global dynamic/{print $NF; exit}')
             read net_adapter_user
             if [[ -z "$net_adapter_user" ]]
                 then
