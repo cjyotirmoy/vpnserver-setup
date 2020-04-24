@@ -24,8 +24,9 @@ then
 else
     flag=4
     echo "sorry we don't support your distro: $distro"
-    mkdir cat /etc/os-release > output/distroinfo.txt
+    mkdir output
+    cat /etc/os-release > output/distroinfo.txt
     echo "If you would like to contribute for testing for your distro kindly contact us with the file: output/distroinfo.txt" 
     exit
 fi
-./install_packages.sh
+source install_packages.sh
