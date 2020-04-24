@@ -28,3 +28,4 @@ else
     echo "If you would like to contribute for testing for your distro kindly contact us with the file: output/distroinfo.txt" 
     exit
 fi
+./install_packages.sh
