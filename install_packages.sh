@@ -17,5 +17,5 @@ then
     echo "Installing packages:"
     sudo apt install wireguard
 fi
-sudo apt install iptables-persistent
+
 

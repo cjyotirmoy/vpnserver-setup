@@ -24,10 +24,11 @@ echo "$(tput setab 1) $(tput setaf 7)Enabling wireguard interface on the server 
     sudo wg-quick up wg0
     sudo systemctl enable wg-quick@wg0.service
 echo "$(tput setab 1) $(tput setaf 7)Enabling ipv4 packet rerouting $(tput sgr 0)"
+    sudo su
     cp /etc/sysctl.conf config_backups/sysctl.conf
-    sudo sed "s/#net.ipv4.ip_forward=1/net.ipv4.ip_forward=1/g" /etc/sysctl.conf > /etc/sysctl.conf
-    sudo sysctl -p
-    sudo echo 1 > /proc/sys/net/ipv4/ip_forward
+    sed "s/#net.ipv4.ip_forward=1/net.ipv4.ip_forward=1/g" /etc/sysctl.conf > /etc/sysctl.conf
+    sysctl -p
+    echo 1 > /proc/sys/net/ipv4/ip_forward
 echo "$(tput setab 1) $(tput setaf 7) Configuring firewall rules ... $(tput sgr 0)"
     ##Tracking VPN Connection
         sudo iptables -A INPUT -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
@@ -38,13 +39,14 @@ echo "$(tput setab 1) $(tput setaf 7) Configuring firewall rules ... $(tput sgr 
         echo "$(tput setab 1) $(tput setaf 7)You have the following network adapters, enter the one you want to use for the tunnel: (Default first one) $(tput sgr 0) "
             ip addr show | awk '/inet.*global dynamic/{print $NF}'
             net_adapter=$(ip addr show | awk '/inet.*global dynamic/{print $NF; exit}')
-            read net_adapter_user
-            if [[ -z "$net_adapter_user" ]]
-                then
-                    net_adapter_user=$net_adapter
-            fi
-        sudo iptables -t nat -A POSTROUTING -s 10.200.200.0/24 -o $net_adapter_user -j MASQUERADE
+            ##read net_adapter_user
+            ##if [[ -z "$net_adapter_user" ]]
+            ##    then
+            ##        net_adapter_user=$net_adapter
+            ##fi
+        sudo iptables -t nat -A POSTROUTING -s 10.200.200.0/24 -o $net_adapter -j MASQUERADE
     ## Reboot persistant settings
+    sudo apt install iptables-persistent
     sudo systemctl enable netfilter-persistent
     sudo netfilter-persistent save
 
