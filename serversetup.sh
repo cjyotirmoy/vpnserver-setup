@@ -33,7 +33,7 @@ iptables -A FORWARD -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT >> logs
 iptables -A FORWARD -i wg0 -o wg0 -m conntrack --ctstate NEW -j ACCEPT >> logs
 
 ##NAT rules
-iptables -t nat -A POSTROUTING -s 10.200.200.0/24 -o $enet_adapter -j MASQUERADE >> logs
+iptables -t nat -A POSTROUTING -s 10.200.200.0/24 -o $net_adapter -j MASQUERADE >> logs
 
 ##persistant ip settings after reboot
 apt install iptables-persistent

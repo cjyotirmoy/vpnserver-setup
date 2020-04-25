@@ -1,8 +1,4 @@
 #!/bin/bash
-if [[ -nz $(sudo -v) ]]
-    then
-    echo "User does not have sudo permissions, exitting..."
-    exit
 
 distro=$(cat /etc/os-release | grep -w "ID=*" | sed "s/ID=//")
 version=$(cat /etc/os-release | grep -w "VERSION_ID=*" | sed "s/VERSION_ID=//" |sed  "s/\"//g" | sed "s/\.//g")
@@ -28,8 +24,9 @@ then
         fi
 else
     flag=4
+    echo ""
     echo "sorry we don't support your distro: $distro"
-    echo "If you would like to contribute for testing for your distro kindly contact us with the file: output/distroinfo.txt" 
+    echo "If you would like to contribute for testing for your distro, contact us" 
     exit
 fi
 
