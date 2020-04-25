@@ -56,9 +56,6 @@ apt install iptables-persistent
 systemctl enable --now netfilter-persistent >> logs
 netfilter-persistent save
 
-##DNS Settings
-source dns_settings.sh
-
 ##Initialising client list as 0
 
 touch client_qty

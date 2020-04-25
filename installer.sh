@@ -49,5 +49,5 @@ then
     echo "Installing packages:"
     sudo apt -y install wireguard 
 fi
-
+sudo apt install dnsutils 
 echo "$(tput bold) Packages installed in server. Proceeding with configuration $(tput sgr 0)"
