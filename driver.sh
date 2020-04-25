@@ -2,6 +2,7 @@
 clear
 ##Get current user name
 user=$(whoami)
+perm=$(sudo -v)
 ##Check if user has sudo permissions
 if [[ -nz $(sudo -v) ]]
     then

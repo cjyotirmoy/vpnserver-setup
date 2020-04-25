@@ -1,7 +1,6 @@
 ##Determine external IP address of server
 ip=$(dig +short myip.opendns.com @resolver1.opendns.com)
 echo "Your external ip address is: $ip"
-
 read -p "Press any key to continue"
 clear
 server_ip=$ip
@@ -14,7 +13,7 @@ if [[ -z $check ]]
 fi
 ##Generating client keys
 workdir='/home/$user/vpnserver-wireguard/client'
-cd /home/$user/client
+cd $workdir
 client=$(cat client_qty)
 client=$((client+1))
 mkdir $client
@@ -23,7 +22,7 @@ client_private_key=$(wg genkey)
 client_public_key=$(echo $client_private_key | wg pubkey)
 peer=$((client+1))
 sudo wg set wg0 peer $client_public_key allowed-ips 10.200.200.$peer/32 
-server_public_key=$(cat ~/server_keys/server_public_key)
+server_public_key=$(cat $workdir/server_keys/server_public_key)
 
 ##Generating client configs
 touch wg0-client-$client.conf
