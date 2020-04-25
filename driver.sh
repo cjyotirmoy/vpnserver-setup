@@ -17,6 +17,6 @@ clear
 ##Find the adapter
 net_adapter=ens4
 ##We need to find someway to let the program return that instead of assigning it manually
-source serversetup.sh
+sudo ./serversetup.sh $user $net_adapter
 
 echo "You can configure clients by executing client_generate.sh"
