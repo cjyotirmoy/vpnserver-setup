@@ -7,6 +7,7 @@ cd $workdir
 mkdir server_keys
 mkdir config_backups
 touch logs
+Umask 077
 wg genkey | tee server_keys/server_private_key | wg pubkey > server_keys/server_public_key
 server_private_key=$(cat server_keys/server_private_key)
 touch /etc/wireguard/wg0.conf
@@ -28,7 +29,8 @@ cat >> /etc/sysctl.conf<<EOF
 ##Configurations by wireguard-vpnserver-script
 net.ipv4.ip_forward=1
 EOF
-
+sysctl -p
+echo 1 > /proc/sys/net/ipv4/ip_forward
 ##Configuring firewall rules
 
 #Tracking VPN connection
@@ -54,11 +56,14 @@ apt install iptables-persistent
 systemctl enable --now netfilter-persistent >> logs
 netfilter-persistent save
 
+##DNS Settings
+source dns_settings.sh
+
 ##Initialising client list as 0
-mkdir $workdir/client
-mkdir $workdir/client/client_keys
-cd $workdir/client
+
 touch client_qty
 echo 0 > client_qty
-
+chmod +777 client_qty
+chmod +777 server_keys/server_public_key
+##Setting permissions
 echo "$(tput bold) Server configured $(tput sgr 0)"

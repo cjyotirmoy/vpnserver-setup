@@ -4,11 +4,7 @@ clear
 user=$(whoami)
 perm=$(sudo -v)
 ##Check if user has sudo permissions
-if [[ -nz $(sudo -v) ]]
-    then
-    echo "User does not have sudo permissions, exitting..."
-    exit
-fi
+
 source installer.sh
 
 echo "$(tput bold) Package installation completed!$(tput sgr 0)"
@@ -19,5 +15,5 @@ clear
 net_adapter="ens4"
 ##We need to find someway to let the program return that instead of assigning it manually
 sudo ./serversetup.sh $user $net_adapter
-
+mkdir ~/vpnserver-wireguard/client/
 echo "You can configure clients by executing client_generate.sh"
