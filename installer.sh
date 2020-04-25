@@ -1,4 +1,9 @@
-##Determine if your OS is eligible 1
+#!/bin/bash
+if [[ -nz $(sudo -v) ]]
+    then
+    echo "User does not have sudo permissions, exitting..."
+    exit
+
 distro=$(cat /etc/os-release | grep -w "ID=*" | sed "s/ID=//")
 version=$(cat /etc/os-release | grep -w "VERSION_ID=*" | sed "s/VERSION_ID=//" |sed  "s/\"//g" | sed "s/\.//g")
 type=$(cat /etc/os-release | grep -w "ID_LIKE=*" | sed "s/ID_LIKE=//")
@@ -24,9 +29,28 @@ then
 else
     flag=4
     echo "sorry we don't support your distro: $distro"
-    mkdir output
-    cat /etc/os-release > output/distroinfo.txt
     echo "If you would like to contribute for testing for your distro kindly contact us with the file: output/distroinfo.txt" 
     exit
 fi
-source install_packages.sh
+
+if [[ $flag -eq 1 ]]
+##Installing the wireguard package
+then
+    echo "Installing packages: "
+    sudo apt -y install wireguard
+elif [[ $flag -eq 2 ]]
+then
+    echo "Adding repository: "
+    sudo apt -y install software-properties-common
+    sudo add-apt-repository ppa:wireguard/wireguard
+    echo "$(tput bold)Updating packages: $(tput sgr 0)"
+    sudo apt-get update
+    echo "Installing wireguard: "
+    sudo apt-get -y install wireguard
+elif [[ $flag -eq 3 ]]
+then
+    echo "Installing packages:"
+    sudo apt -y install wireguard 
+fi
+
+echo "$(tput bold) Packages installed in server. Proceeding with configuration $(tput sgr 0)"
