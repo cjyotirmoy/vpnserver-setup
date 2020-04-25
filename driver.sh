@@ -16,7 +16,7 @@ read -p "Press any key to continue"
 clear
 
 ##Find the adapter
-net_adapter=ens4
+net_adapter="ens4"
 ##We need to find someway to let the program return that instead of assigning it manually
 sudo ./serversetup.sh $user $net_adapter
 

@@ -12,7 +12,7 @@ if [[ -z $check ]]
         exit
 fi
 ##Generating client keys
-workdir='/home/$user/vpnserver-wireguard/client'
+workdir="/home/$user/vpnserver-wireguard/client"
 cd $workdir
 client=$(cat client_qty)
 client=$((client+1))
@@ -36,4 +36,5 @@ PublicKey = $server_public_key
 Endpoint = $server_ip:51820
 AllowedIPs = 0.0.0.0/0
 PersistentKeepalive = 21" >> wg0-client-$client.conf
+echo $client > $workdir/client_qty
 echo "Client configuration file generated in $workdir/client/wg0-client-$client.conf"
