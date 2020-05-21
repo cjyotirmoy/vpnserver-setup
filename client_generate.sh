@@ -14,7 +14,7 @@ fi
 ##Generating client keys
 workdir="/home/$user/vpnserver-wireguard/client"
 cd $workdir
-client=$(cat ../client_qty)
+client=$(cat client_qty)
 client_private_key=$(wg genkey)
 client_public_key=$(echo $client_private_key | wg pubkey)
 peer=$((client+1))
@@ -22,7 +22,7 @@ sudo wg set wg0 peer $client_public_key allowed-ips 10.200.200.$peer/32
 server_public_key=$(cat $workdir/../server_keys/server_public_key)
 
 ##Generating client configs
-touch wg0-client-$client.conf
+touch wg0-client-$peer.conf
 echo "[Interface]
 Address = 10.200.200.$peer/24
 PrivateKey = $client_private_key
@@ -32,6 +32,6 @@ echo "
 PublicKey = $server_public_key
 Endpoint = $server_ip:51820
 AllowedIPs = 0.0.0.0/0
-PersistentKeepalive = 21" >> wg0-client-$client.conf
-echo $client > $workdir/../client_qty
-echo "Client configuration file generated in $workdir/client/wg0-client-$client.conf"
+PersistentKeepalive = 21" >> wg0-client-$peer.conf
+echo $client > $workdir/client_qty
+echo "Client configuration file generated in $workdir/wg0-client-$client.conf"

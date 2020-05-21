@@ -58,9 +58,9 @@ netfilter-persistent save
 
 ##Initialising client list as 0
 
-touch client_qty
-echo 0 > client_qty
-chmod +777 client_qty
-chmod +777 server_keys/server_public_key
+touch $workdir/client/client_qty
+echo 0 > $wokrdir/client/client_qty
+chmod 777 $workdir/client/client_qty
+chmod 777 server_keys/server_public_key
 ##Setting permissions
 echo "$(tput bold) Server configured $(tput sgr 0)"
