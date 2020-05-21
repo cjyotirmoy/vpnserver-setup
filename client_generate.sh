@@ -5,7 +5,7 @@ read -p "Press any key to continue"
 clear
 server_ip=$ip
 user=$(whoami)
-check=$(ls ~/vpnserver-wireguard/ | grep "client_qty")
+check=$(ls ~/vpnserver-wireguard/client | grep "client_qty")
 if [[ -z $check ]]
     then
         echo "$(tput bold) Environment variables within the vpnserver-wireguard directory changed since server setup or last client setup or a different user is executing this. Retrace your steps or contact us for more information! $(tput sgr 0)"
@@ -22,7 +22,7 @@ sudo wg set wg0 peer $client_public_key allowed-ips 10.200.200.$peer/32
 server_public_key=$(cat $workdir/../server_keys/server_public_key)
 
 ##Generating client configs
-touch wg0-client-$peer.conf
+touch wg0-client-$client.conf
 echo "[Interface]
 Address = 10.200.200.$peer/24
 PrivateKey = $client_private_key
@@ -32,6 +32,6 @@ echo "
 PublicKey = $server_public_key
 Endpoint = $server_ip:51820
 AllowedIPs = 0.0.0.0/0
-PersistentKeepalive = 21" >> wg0-client-$peer.conf
-echo $client > $workdir/client_qty
+PersistentKeepalive = 21" >> wg0-client-$client.conf
+echo $peer > client_qty
 echo "Client configuration file generated in $workdir/wg0-client-$client.conf"
