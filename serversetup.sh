@@ -1,7 +1,6 @@
 #!/bin/bash
 user=$1
 net_adapter=$2
-mkdir /home/$user/vpnserver-wireguard/
 workdir="/home/$user/vpnserver-wireguard"
 cd $workdir
 mkdir server_keys
