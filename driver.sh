@@ -17,7 +17,4 @@ net_adapter=$(ip addr show | awk '/inet.*scope global dynamic/{print $NF; exit}'
 mkdir ~/vpnserver-wireguard/client/
 sudo ./serversetup.sh $user $net_adapter
 
-
-sudo chmod 777 ~/vpnserver
-
 echo "You can configure clients by executing client_generate.sh"
