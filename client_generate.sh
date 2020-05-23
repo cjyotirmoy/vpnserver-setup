@@ -1,8 +1,6 @@
+date=$(date +%F)
 ##Determine external IP address of server
 ip=$(dig +short myip.opendns.com @resolver1.opendns.com)
-echo "Your external ip address is: $ip"
-read -p "Press any key to continue"
-clear
 server_ip=$ip
 user=$(whoami)
 check=$(ls ~/vpnserver-wireguard/client | grep "client_qty")
@@ -34,4 +32,5 @@ Endpoint = $server_ip:51820
 AllowedIPs = 0.0.0.0/0
 PersistentKeepalive = 21" >> wg0-client-$client.conf
 echo $peer > client_qty
+mysql -u client_gen -p'password' -D vpn -e "INSERT INTO CLIENTS VALUES($client, '$email', '$client_private_key', '0.0.0.0', '$date');"
 echo "Client configuration file generated in $workdir/wg0-client-$client.conf"

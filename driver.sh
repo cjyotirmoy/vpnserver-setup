@@ -18,4 +18,10 @@ mkdir ~/vpnserver-wireguard
 mkdir ~/vpnserver-wireguard/client/
 sudo ./serversetup.sh $user $net_adapter
 
+echo "Do you want to manage a database of the clients?(Y/N)"
+read input
+if[[ $input -eq "Y" || $input -eq "y"]]
+    {
+        ./database_setup.sh
+    }
 echo "You can configure clients by executing client_generate.sh"
