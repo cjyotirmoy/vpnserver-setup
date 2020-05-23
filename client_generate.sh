@@ -12,7 +12,8 @@ fi
 ##Generating client keys
 workdir="/home/$user/vpnserver-wireguard/client"
 cd $workdir
-while  [! -z $(ls | grep "flag") ]
+check2=$(ls | grep "flag")
+while  [[ ! -z $check2  ]
   do
     sleep 0.5
   done
@@ -39,5 +40,5 @@ PublicKey = $server_public_key
 Endpoint = $server_ip:51820
 AllowedIPs = 0.0.0.0/0
 PersistentKeepalive = 21" >> wg0-client-$client.conf
-mysql -u client_gen -p'password' -D vpn -e "INSERT INTO CLIENTS VALUES($client, '$email', '$client_private_key', '0.0.0.0', '$date');"
+mysql -u client_gen -p'password' -D vpn -e "INSERT INTO clients VALUES($client, '$email', '$client_private_key', '0.0.0.0', '$date');"
 echo "Client configuration file generated in $workdir/wg0-client-$client.conf"
