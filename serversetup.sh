@@ -56,10 +56,9 @@ systemctl enable --now netfilter-persistent >> logs
 netfilter-persistent save
 
 ##Initialising client list as 0
-cd $workdir/client/
 touch $workdir/client/client_qty
-echo 1 > client/client_qty
+echo 1 > $workdir/client/client_qty
 chmod 777 $workdir/client/client_qty
-chmod 777 server_keys/server_public_key
+chmod 777 $workdir/server_keys/server_public_key
 ##Setting permissions
 echo "$(tput bold) Server configured $(tput sgr 0)"
