@@ -15,6 +15,10 @@ clear
 net_adapter=$(ip addr show | awk '/inet.*scope global dynamic/{print $NF; exit}')
 ##We need to find someway to let the program return that instead of assigning it manually
 mkdir ~/vpnserver-wireguard
+touch server_ip
+##Determine external IP address of server
+ip=$(dig +short myip.opendns.com @resolver1.opendns.com)
+echo $ip > server_ip
 mkdir ~/vpnserver-wireguard/client/
 sudo ./serversetup.sh $user $net_adapter
 
